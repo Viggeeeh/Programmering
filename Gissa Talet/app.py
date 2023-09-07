@@ -3,47 +3,68 @@ import random
 from colors import bcolors
 os.system('cls')
 
-# Todo List
-# Commands: /quit, /cheat etc.
-# Secret Numbers: If you guess the number, you'll get something.
-# Print tries left.
-
 def check_number(guess, dice):
     if guess < dice:
-        return print(bcolors.RED + "Higher Number!")
+        return print(bcolors.RED + "Higher Number! You have", (7 - tries), "tries left")
     elif guess > dice:
-        return print(bcolors.RED + "Lower Number!")
+        return print(bcolors.RED + "Lower Number! You have", (7 - tries), "tries left")
     elif guess == dice:
         global win # Makes a global variable
         win = True
-        return print(bcolors.GREEN + "That's the right Number!")    
+        return print(bcolors.GREEN + "That's the right Number! It took you", tries, "tries!")  
 
 # Variables
 win = False
+cheat = False
 avalible_tries = 7
-dice = random.randint(1, 100)   
+tries = 1
+dice = random.randint(1, 100)  
+game = True 
 
 
-print("""Welcome to Guess The Number!
+print(bcolors.YELLOW + """Welcome to Guess The Number!
 Developed by the one and only: Viggo Öfors
+      
 In this game you'll have to guess a number
-between 1 and 100 And you only have 7 tries. 
+between 1 and 100 And you only have 7 tries.
+      
+Note that if you type a negative or a number 
+that is over 100, you will lose a try.
+
+/q or /quit to force quit 
+      
+and /cheat for cheats :)
+      
 Good luck!\n""")
 
 # Game loop
-while True:
-    print(dice)
+while game:
+    if cheat:
+        print(bcolors.GREEN, dice, bcolors.RED + "is the number")
+    
     while True:
-        # Handles The Guess
         try:
-            guess = int(input(bcolors.DEFAULT + "Guess a number: "))
+            guess = input(bcolors.DEFAULT + "\nGuess a number: " + bcolors.CYAN).lower()
+
+            if guess == "/cheat":
+                print(bcolors.PURPLE + "Cheat Activated!")
+                cheat = True
+                print(bcolors.GREEN, dice, bcolors.RED + "is the number") # + doesnt work infront of dice.
+
+            elif guess == "/quit" or guess == "/q":
+                print(bcolors.RED + "You Just ended the game!")
+                game = False
+                break
+
+            guess = int(guess)
+            check_number(guess, dice) # Checks and returns if the guess is correct
             break
         except:
             print("It Needs to be a Number!")
 
-    check_number(guess, dice) # Checks and returns if the guess is correct 
 
     # Handles the rounds
+    tries += 1
     avalible_tries -= 1
 
     if avalible_tries <= 0 or win:
@@ -53,8 +74,12 @@ while True:
         # Check if the user want's to play again
         new_game = input(bcolors.BLUE + "Do you want to try again? (Y/N): ").upper()
         if new_game == "Y":
-            dice = random.randint(1, 100)   
+            dice = random.randint(1, 100)   # Rolls a new dice
+            # Resets the stats
             avalible_tries = 7
+            tries = 1
             win = False
+
+            os.system('cls')
         else:
-            break
+            game = False
