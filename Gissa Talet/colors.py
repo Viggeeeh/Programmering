@@ -1,3 +1,6 @@
+# Gissa Talet
+# Colours - Johan Wrangö
+
 class bcolors:
     PURPLE = "\033[95m"
     BLUE = "\033[94m"
