@@ -1,3 +1,8 @@
+# Gissa Talet
+# Coded and Designed Viggo Öfors
+# Sources: Johan Wrangö with the colors.
+# Version 1.0.1
+
 import os
 import random
 from colors import bcolors
