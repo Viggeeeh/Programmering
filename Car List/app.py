@@ -16,10 +16,19 @@ def check_inputs(car_name):
     if car_name == "":
         exit()
 
-    if car_name == "edit" and len(car_list) > 0:
+    if car_name.lower() == "edit" and len(car_list) > 0:
         while True: # Makes sure we don't get a wrong input
             try:
-                edit_car = int(input(f"{bcolors.DEFAULT}What item would you like to edit? (1 - {len(car_list)}): "))
+                print(f"{bcolors.DEFAULT}Press {bcolors.PURPLE}Enter {bcolors.DEFAULT}to exit Edit Mode")
+                edit_car = input(f"{bcolors.DEFAULT}What item would you like to edit? (1 - {len(car_list)}): ")
+
+                # Press enter to exit edit mode
+                if edit_car == "":
+                    break
+                
+                # Makes it to an integer
+                edit_car = int(edit_car)
+
                 new_car = input(f"What would you like to change {bcolors.BLUE + car_list[edit_car-1] + bcolors.DEFAULT} with? ")
                 car_list[edit_car-1] = new_car
                 break
