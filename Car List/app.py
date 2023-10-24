@@ -1,3 +1,10 @@
+# app.py: Skriv in dina favoritbilar i en lista
+
+__author__  = "Viggo Öfors"
+__version__ = "1.0.0"
+__email__   = "viggo.ofors@elev.ga.ntig.se"
+
+
 import os
 from colors import bcolors
 
