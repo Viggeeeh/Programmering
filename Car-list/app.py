@@ -7,9 +7,12 @@ __email__   = "viggo.ofors@elev.ga.ntig.se"
 
 import os
 from colors import bcolors
+import json
 
 os.system("cls")
 car_list = []
+file_name = "./Car-list/list.json"
+file_exists = os.path.exists(file_name)
 
 
 def instructions():
@@ -21,7 +24,14 @@ def instructions():
     
 def check_inputs(car_name):
     if car_name == "":
+        # Adds to json
+        if file_exists:
+            os.remove(file_name)
+        with open(file_name, "w") as file:
+            json.dump(car_list, file)
+
         exit()
+
 
     if car_name.lower() == "edit" and len(car_list) > 0:
         while True: # Makes sure we don't get a wrong input
@@ -48,9 +58,15 @@ def check_inputs(car_name):
     elif not car_name in car_list: 
         car_list.append(car_name)
 
+# Adds the beforeused list
+if file_exists:
+    with open(file_name, "r") as file:
+        car_list += json.load(file)
+    
 
 while True:
     instructions()
+    print(car_list) # Debug test
 
     for i in car_list:
         print(f"{bcolors.DEFAULT} {car_list.index(i)+1}) {bcolors.BLUE + i}")
